@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Hero.module.scss";
 
 const Hero = () => {
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(true);
 
 //   useEffect(() => {
 //     const videoElement: any = document.getElementById("hero-video");
@@ -30,8 +30,8 @@ const Hero = () => {
       />
       {videoEnded && (
         <div className={styles.overlay}>
-          <p className={styles.text}>Chicago</p>
-          <p className={styles.subText}>Kinda fast, really furious</p>
+          <span className={styles.text}>Traffic Crashes in Chicago</span>
+          <span className={styles.subText}>Kinda fast, really furious</span>
         </div>
       )}
     </div>

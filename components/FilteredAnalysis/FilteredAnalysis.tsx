@@ -2,85 +2,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./FilteredAnalysis.module.scss";
 import { data } from "@/modules/RadarData";
-import * as d3 from "d3";
+import { dailyData } from "@/modules/DailyData";
+import CustomRadarChart from "../CustomRadarChart/CustomRadarChart";
+import CustomPieChart from "../CustomPieChart/CustomPieChart";
+import Select from "react-select";
+
+const options = [
+  { value: "2019", label: "Year 2019" },
+  { value: "2022", label: "Year 2022" },
+];
 
 const FilteredAnalysis = () => {
   const chartRef = useRef(null);
   const [selectedYear, setSelectedYear] = useState<string>("2019");
-  const [chartData, setChartData] = useState<any[]>([]);
+  const [chartData, setChartData] = useState<any[]>(data[0].data);
+  const [pieChartData, setPieChartData] = useState<any[]>(dailyData[0].data);
 
   useEffect(() => {
-    const temp = data.filter((i: any) => i.year === selectedYear)[0].data;
-    console.log(temp);
+    let temp = data.filter((el: any) => el.year === selectedYear)[0].data;
     setChartData(temp);
+    let temp2 = dailyData.filter((el: any) => el.year === selectedYear)[0].data;
+    setPieChartData(temp2);
   }, [selectedYear]);
 
-  useEffect(() => {
-    const svg = d3
-      .select(chartRef.current)
-      .append("svg")
-      .attr("width", 400)
-      .attr("height", 400);
-
-    const categories = ["male", "female", "unknown"];
-    // Set up scales
-    const radius = 150;
-    const angleSlice = (Math.PI * 2) / categories.length;
-
-    const scale = d3
-      .scaleLinear()
-      .domain([0, 40]) // Adjust the domain based on your data
-      .range([0, radius]);
-
-    // Draw axes
-    categories.forEach((category, index) => {
-      const angle = index * angleSlice;
-      const x = radius * Math.cos(angle);
-      const y = radius * Math.sin(angle);
-
-      svg
-        .append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", x)
-        .attr("y2", y)
-        .attr("stroke", "gray");
-
-      svg
-        .append("text")
-        .attr("x", x)
-        .attr("y", y)
-        .attr("dy", "0.35em")
-        .text(category)
-        .attr("text-anchor", "middle");
-    });
-
-    // Draw radar chart
-    chartData.forEach((d: any, i) => {
-      const path = categories
-        .map((category, index) => {
-          const angle = index * angleSlice;
-          const value = +d[category];
-          const x = scale(value) * Math.cos(angle);
-          const y = scale(value) * Math.sin(angle);
-          return `${x},${y}`;
-        })
-        .join(" ");
-
-      svg
-        .append("polygon")
-        .attr("points", path)
-        .attr("stroke", "steelblue")
-        .attr("fill", "none")
-        .attr("stroke-width", 2)
-        .attr("transform", `translate(${radius},${radius})`)
-        .classed("radar-chart-path", true);
-    });
-  }, [chartData]);
+  console.log(pieChartData);
 
   return (
     <div className={styles.container}>
-      <h1>A visualization-based explanation</h1>
+      {/* <h1>A visualization-based explanation</h1> */}
+      <div className={styles.select}>
+        <Select
+          options={options}
+          placeholder="Select Year"
+          defaultValue={{ value: "2019", label: "Year 2019" }}
+          onChange={(value)=> setSelectedYear(value.value)}
+        />
+      </div>
       <div className={styles.mapContainer}>
         {selectedYear === "2019" ? (
           <iframe
@@ -99,13 +56,13 @@ const FilteredAnalysis = () => {
         )}
         <div className={styles.content}>
           <span className={styles.text}>
-            In the year{" "}
-            <span className={styles.emphasizedText}>{selectedYear}</span>, the
-            city of Chicago had{" "}
+            In{" "}
+            <span className={styles.emphasizedText}>{selectedYear}</span>,
+            {" "}there were a total of
             <span className={styles.emphasizedText}>
               {selectedYear === "2019" ? "117,760" : "108,399"}
             </span>{" "}
-            traffic crashes.
+            traffic-related crashes in the city of Chicago.
           </span>
           <p className={styles.subText}>
             As per Illinois statute, only crashes with a property damage value
@@ -124,8 +81,25 @@ const FilteredAnalysis = () => {
         </span>{" "}
         were Hit and Run cases.
       </p>
-      <p>So who's behind the wheels?</p>
-      <div ref={chartRef}></div>
+      <div className={styles.radarContainer}>
+        <p className={styles.text}>Well, who's behind the wheels?</p>
+        <span className={styles.subText}>
+          An age-wise distribution reveals the majority of crashes occur when an
+          18-39 year old is driving.{" "}
+        </span>
+        <span className={styles.subText}>
+          Additionally, fun (?) fact: a 90+ year old driver was involved in{" "}
+          <b>{selectedYear === "2019" ? "229" : "129"}</b> crashes.
+        </span>
+        <CustomRadarChart data={chartData} />
+      </div>
+      {/* <div className={styles.dailyContainer}>
+        <p className={styles.text}>On which days of the week did these crashes usually occur?</p>
+        <span className={styles.subText}>
+          Seems pretty even, right?
+        </span>
+        <CustomPieChart data={pieChartData} />
+      </div> */}
     </div>
   );
 };

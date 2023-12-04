@@ -14,9 +14,6 @@
     justify-content: center;
     row-gap: 2.5%;
     text-align: center;
-    .subText {
-      color: #15425f;
-    }
   }
 }
 
@@ -31,7 +28,28 @@
   }
 }
 
+.subText {
+  color: #15425f;
+}
+
 .hitAndRunText {
   text-align: center;
   margin: 2.5% 0;
+}
+
+.radarContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.select {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 2.5%;
+
+  > div {
+    width: 20rem;
+  }
 }

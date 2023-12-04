@@ -33,9 +33,9 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <Introduction />
       <FilteredAnalysis />
       <ComparativeAnalysis />
+      <Introduction />
     </div>
   );
 }
