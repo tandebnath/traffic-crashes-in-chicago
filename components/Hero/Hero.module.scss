@@ -1,0 +1,48 @@
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s; /* Add a transition for opacity change */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark greyish overlay */
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  opacity: 1; /* Initially hidden */
+  transition: opacity 2s ease-in; /* Add a transition for opacity change */
+  z-index: 2;
+}
+
+.text {
+  color: white;
+  font-family: 'Playfair Display';
+  font-size: 8rem;
+  opacity: 1; /* Initially hidden */
+  transition: opacity 2s ease-in;
+}
+
+.subText{
+  color: white;
+  font-size: 2rem;
+  opacity: 1;
+}
+
+// .overlay.active,
+// .text.active {
+//   opacity: 1; /* Visible when active */
+// }

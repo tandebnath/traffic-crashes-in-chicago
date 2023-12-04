@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 5% 10%;
+
+  .topSection {
+    display: flex;
+    flex-flow: row nowrap;
+    column-gap: 5rem;
+    .image {
+      height: 100vh;
+    }
+    .text{
+        color: #15425f;
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+  }
+}
