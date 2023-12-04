@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Hero.module.scss";
 
 const Hero = () => {
-  const [videoEnded, setVideoEnded] = useState(true);
+  const [videoEnded, setVideoEnded] = useState(false);
 
 //   useEffect(() => {
 //     const videoElement: any = document.getElementById("hero-video");

@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 2.5rem;
+    row-gap: 2.5rem;
+}
+
+.speedLimitContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2.5rem;
+}
+
+.text {
+  font-size: 2rem;
+  line-height: 1.25;
+  color: #15425f;
+}
+
+.subText {
+  color: #15425f;
+}

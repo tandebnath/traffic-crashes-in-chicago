@@ -6,6 +6,7 @@ import ChicagoMap from "@/components/ChicagoMap/ChicagoMap";
 import Hero from "@/components/Hero/Hero";
 import Introduction from "@/components/Introduction/Introduction";
 import FilteredAnalysis from "@/components/FilteredAnalysis/FilteredAnalysis";
+import ComparativeAnalysis from "@/components/ComparativeAnalysis/ComparativeAnalysis";
 
 // Define the type for your data
 interface DataPoint {
@@ -34,6 +35,7 @@ export default function Home() {
       <Hero />
       <Introduction />
       <FilteredAnalysis />
+      <ComparativeAnalysis />
     </div>
   );
 }

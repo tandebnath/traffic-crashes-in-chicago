@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 2.5rem;
+    row-gap: 2.5rem;
+}
+
+.heatmapContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2.5rem;
+}
+
+.viz {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.text {
+  font-size: 2rem;
+  line-height: 1.25;
+  color: #15425f;
+}
+
+.subText {
+  color: #15425f;
+}

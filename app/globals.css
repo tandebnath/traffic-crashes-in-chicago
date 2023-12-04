@@ -19,3 +19,8 @@ h1 {
   font-family: 'Playfair Display';
   font-size: 4rem;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
