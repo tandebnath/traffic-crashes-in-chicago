@@ -1,6 +1,7 @@
 {
   "name": "traffic-crashes-in-chicago",
   "version": "0.1.0",
+  "homepage": "https://tandebnath.github.io/traffic-crashes-in-chicago",
   "private": true,
   "scripts": {
     "dev": "next dev",
