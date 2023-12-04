@@ -1,9 +1,82 @@
 "use client";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./FilteredAnalysis.module.scss";
+import { data } from "@/modules/RadarData";
+import * as d3 from "d3";
 
 const FilteredAnalysis = () => {
-  const [selectedYear, setSelectedYear] = React.useState<string>("2019");
+  const chartRef = useRef(null);
+  const [selectedYear, setSelectedYear] = useState<string>("2019");
+  const [chartData, setChartData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const temp = data.filter((i: any) => i.year === selectedYear)[0].data;
+    console.log(temp);
+    setChartData(temp);
+  }, [selectedYear]);
+
+  useEffect(() => {
+    const svg = d3
+      .select(chartRef.current)
+      .append("svg")
+      .attr("width", 400)
+      .attr("height", 400);
+
+    const categories = ["male", "female", "unknown"];
+    // Set up scales
+    const radius = 150;
+    const angleSlice = (Math.PI * 2) / categories.length;
+
+    const scale = d3
+      .scaleLinear()
+      .domain([0, 40]) // Adjust the domain based on your data
+      .range([0, radius]);
+
+    // Draw axes
+    categories.forEach((category, index) => {
+      const angle = index * angleSlice;
+      const x = radius * Math.cos(angle);
+      const y = radius * Math.sin(angle);
+
+      svg
+        .append("line")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", x)
+        .attr("y2", y)
+        .attr("stroke", "gray");
+
+      svg
+        .append("text")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("dy", "0.35em")
+        .text(category)
+        .attr("text-anchor", "middle");
+    });
+
+    // Draw radar chart
+    chartData.forEach((d: any, i) => {
+      const path = categories
+        .map((category, index) => {
+          const angle = index * angleSlice;
+          const value = +d[category];
+          const x = scale(value) * Math.cos(angle);
+          const y = scale(value) * Math.sin(angle);
+          return `${x},${y}`;
+        })
+        .join(" ");
+
+      svg
+        .append("polygon")
+        .attr("points", path)
+        .attr("stroke", "steelblue")
+        .attr("fill", "none")
+        .attr("stroke-width", 2)
+        .attr("transform", `translate(${radius},${radius})`)
+        .classed("radar-chart-path", true);
+    });
+  }, [chartData]);
 
   return (
     <div className={styles.container}>
@@ -45,12 +118,14 @@ const FilteredAnalysis = () => {
         </div>
       </div>
       <p className={`${styles.text} ${styles.hitAndRunText}`}>
-        Of these, <span className={styles.emphasizedText}>{selectedYear === "2019" ? "31,953" : "35,556"}</span>{" "}
+        Of these,{" "}
+        <span className={styles.emphasizedText}>
+          {selectedYear === "2019" ? "31,953" : "35,556"}
+        </span>{" "}
         were Hit and Run cases.
       </p>
-      <p>
-        So who's behind the wheels?
-      </p>
+      <p>So who's behind the wheels?</p>
+      <div ref={chartRef}></div>
     </div>
   );
 };
