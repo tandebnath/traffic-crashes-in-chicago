@@ -10,12 +10,21 @@
     .image {
       height: 100vh;
     }
-    .text{
+    .conclusion {
+      display: flex;
+      flex-flow: column nowrap;
+      row-gap: 1.5rem;
+      .text {
         color: #15425f;
+        line-height: 1.5;
         font-size: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+      .subText {
+        color: #15425f;
+      }
     }
   }
 }

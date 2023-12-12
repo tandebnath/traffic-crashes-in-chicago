@@ -25,7 +25,6 @@ const FilteredAnalysis = () => {
     setPieChartData(temp2);
   }, [selectedYear]);
 
-  console.log(pieChartData);
 
   return (
     <div className={styles.container}>
